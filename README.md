@@ -26,7 +26,7 @@ An end-to-end econometric measurement and capital allocation platform designed t
 | Metric / Dimension | Performance | Strategic Business Takeaway |
 | :--- | :---: | :--- |
 | **Model Explanatory Power ($R^2$)** | **90.53%** | Explains over 90% of daily revenue variance across 728 continuous days (104 weeks / 2 years). |
-| **Mean Absolute Pct Error (MAPE)** | **3.57%** | Daily forecast accuracy within ±$1,914 on an e-commerce business averaging $27,000+/day. |
+| **Mean Absolute Pct Error (MAPE)** | **3.57%** | Daily forecast accuracy within $\pm \$1,914$ on an e-commerce business averaging $\$27,000+/\text{day}$. |
 | **Identified Capital Misallocation** | **$173,077 / yr** | Reallocating budget away from saturated search into video/social unlocks **+4.96%** in incremental revenue with **$0 added ad spend**. |
 | **Google P-Max Attribution Gap** | **+158.3%** | Platform claims a 3.10x ROAS, but actual incremental return is **1.20x**, destroying profit margins at current scale. |
 | **YouTube Awareness Attribution Gap** | **-29.3%** | Last-click analytics undervalue YouTube (1.45x reported vs. **2.05x true iROAS**) due to high memory carryover ($\lambda = 0.461$). |
@@ -90,9 +90,9 @@ Advertising walled gardens (Meta Ads Manager, Google Ads) operate on attribution
 ## Mathematical Framework
 
 ### 1. Geometric Adstock Carryover
-Advertising impact persists across time. The effective ad exposure $x_{m, t}^*$ on day $t$ given raw expenditure $x_{m, t}$ and retention decay factor $\lambda_m \in [0, 1)$ is modeled as:
+Advertising impact persists across time. The effective ad exposure $x_{m,t}^*$ on day $t$ given raw expenditure $x_{m,t}$ and retention decay factor $\lambda_m \in [0,1)$ is modeled as:
 
-$$x_{m, t}^* = x_{m, t} + \lambda_m \cdot x_{m, t-1}^* = \sum_{l=0}^\infty \lambda_m^l x_{m, t-l}$$
+$$x_{m,t}^* = x_{m,t} + \lambda_m \cdot x_{m,t-1}^* = \sum_{l=0}^\infty \lambda_m^l x_{m,t-l}$$
 
 * **Half-Life Formulation:** The time required for an ad impression's psychological impact to decay by 50%:
   $$t_{1/2} = \frac{\ln(0.5)}{\ln(\lambda)}$$
