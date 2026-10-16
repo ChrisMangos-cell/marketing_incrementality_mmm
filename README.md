@@ -1,4 +1,4 @@
-# ⚖️ Meridian-Lite: Enterprise Marketing Mix Modeling & Budget Optimization Platform
+# ⚖️ Meridian-Lite: Enterprise Marketing Mix Modelling & Budget Optimization Platform
 
 An end-to-end econometric measurement and capital allocation platform designed to solve post-iOS 14.5 ad-attribution failure. Bypasses deterministic tracking (cookies/pixels) by implementing **Bayesian Non-Linear Marketing Mix Modeling (MMM)**, **Geometric Adstock Carryover**, **Hill Saturation Dynamics**, and **Constrained Non-Linear Capital Optimization (SLSQP)**.
 
