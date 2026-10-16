@@ -26,7 +26,7 @@ An end-to-end econometric measurement and capital allocation platform designed t
 | Metric / Dimension | Performance | Strategic Business Takeaway |
 | :--- | :---: | :--- |
 | **Model Explanatory Power ($R^2$)** | **90.53%** | Explains over 90% of daily revenue variance across 728 continuous days (104 weeks / 2 years). |
-| **Mean Absolute Pct Error (MAPE)** | **3.57%** | Daily forecast accuracy within ±$1,914 on an e-commerce business averaging $27,000+/day. |
+| **Mean Absolute Pct Error (MAPE)** | **3.57%** | Daily forecast accuracy within $\pm \$1,914$ on an e-commerce business averaging $\$27,000+/\text{day}$. |
 | **Identified Capital Misallocation** | **$173,077 / yr** | Reallocating budget away from saturated search into video/social unlocks **+4.96%** in incremental revenue with **$0 added ad spend**. |
 | **Google P-Max Attribution Gap** | **+158.3%** | Platform claims a 3.10x ROAS, but actual incremental return is **1.20x**, destroying profit margins at current scale. |
 | **YouTube Awareness Attribution Gap** | **-29.3%** | Last-click analytics undervalue YouTube (1.45x reported vs. **2.05x true iROAS**) due to high memory carryover ($\lambda = 0.461$). |
@@ -63,9 +63,9 @@ Advertising walled gardens (Meta Ads Manager, Google Ads) operate on attribution
                          │
                          ▼
 [ Applied Mathematics & Non-Linear Transformations ]
-      ├── Geometric Adstock: x*_t = x_t + λ · x*_{t-1}
-      ├── Hill Saturation: S(x*) = (x*)^γ / (K^γ + (x*)^γ)
-      └── First-Order Analytic Derivative: dS/dx = γ K^γ (x*)^(γ-1) / (K^γ + (x*)^γ)^2
+      ├── Geometric Adstock: x~_t = x_t + λ · x~_{t-1}
+      ├── Hill Saturation: S(x~) = (x~)^γ / (K^γ + (x~)^γ)
+      └── First-Order Analytic Derivative: dS/dx = γ K^γ (x~)^(γ-1) / (K^γ + (x~)^γ)^2
                          │
                          ▼
 [ Model Estimation & Parameter Recovery (L-BFGS-B MAP Loss) ]
@@ -90,9 +90,9 @@ Advertising walled gardens (Meta Ads Manager, Google Ads) operate on attribution
 ## Mathematical Framework
 
 ### 1. Geometric Adstock Carryover
-Advertising impact persists across time. The effective ad exposure $x_{m, t}^{*}$ on day $t$ given raw expenditure $x_{m, t}$ and retention decay factor $\lambda_m \in [0, 1)$ is modeled as:
+Advertising impact persists across time. The effective ad exposure $\tilde{x}_{m, t}$ on day $t$ given raw expenditure $x_{m, t}$ and retention decay factor $\lambda_m \in [0, 1)$ is modeled as:
 
-$$x_{m, t}^{*} = x_{m, t} + \lambda_m \cdot x_{m, t-1}^{*} = \sum_{l=0}^{\infty} \lambda_m^l x_{m, t-l}$$
+$$\tilde{x}_{m, t} = x_{m, t} + \lambda_m \cdot \tilde{x}_{m, t-1} = \sum_{l=0}^{\infty} \lambda_m^l x_{m, t-l}$$
 
 * **Half-Life Formulation:** The time required for an ad impression's psychological impact to decay by 50%:
   $$t_{1/2} = \frac{\ln(0.5)}{\ln(\lambda)}$$
@@ -102,7 +102,7 @@ $$x_{m, t}^{*} = x_{m, t} + \lambda_m \cdot x_{m, t-1}^{*} = \sum_{l=0}^{\infty}
 ### 2. Hill Saturation Function
 Models diminishing returns as media spend scales against a finite audience:
 
-$$S(x^{*}) = \frac{(x^{*})^\gamma}{K^\gamma + (x^{*})^\gamma}$$
+$$S(\tilde{x}) = \frac{\tilde{x}^\gamma}{K^\gamma + \tilde{x}^\gamma}$$
 
 Where:
 * $K > 0$: **Half-Saturation Threshold** (spend level where response reaches 50% of maximum capacity: $S(K) = 0.5$).
@@ -111,7 +111,7 @@ Where:
 #### Analytic Marginal ROAS Derivative
 To determine whether an extra dollar of budget yields positive incremental return, the instantaneous rate of change is calculated via the quotient rule:
 
-$$\text{mROAS}_m(x) = \beta_m \cdot \frac{dS}{dx} = \beta_m \cdot \frac{\gamma_m K_m^{\gamma_m} (x_m^{*})^{\gamma_m - 1}}{\left(K_m^{\gamma_m} + (x_m^{*})^{\gamma_m}\right)^2}$$
+$$\text{mROAS}_m(x) = \beta_m \cdot \frac{dS}{dx} = \beta_m \cdot \frac{\gamma_m K_m^{\gamma_m} \tilde{x}_m^{\gamma_m - 1}}{\left(K_m^{\gamma_m} + \tilde{x}_m^{\gamma_m}\right)^2}$$
 
 ### 3. Constrained Budget Optimization (SLSQP)
 We formulate the non-linear constrained capital allocation problem:
@@ -120,7 +120,7 @@ $$\max_{\mathbf{s}} \sum_{m=1}^M \text{Revenue}_m(s_m) \quad \text{subject to} \
 
 Using Karush-Kuhn-Tucker (KKT) first-order optimality conditions, maximum capital efficiency is achieved when the **Marginal ROAS of every unconstrained channel equals the shadow price of capital $\lambda$**:
 
-$$\text{mROAS}_1(s_1^{*}) = \text{mROAS}_2(s_2^{*}) = \dots = \text{mROAS}_M(s_M^{*}) = \lambda = \mathbf{0.73}$$
+$$\text{mROAS}_1(s_1^{\text{opt}}) = \text{mROAS}_2(s_2^{\text{opt}}) = \dots = \text{mROAS}_M(s_M^{\text{opt}}) = \lambda = \mathbf{0.73}$$
 
 ---
 
